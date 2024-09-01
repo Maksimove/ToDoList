@@ -13,7 +13,6 @@
 		8F28AD242C847DEF00D622CE /* ToDoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F28AD222C847DEF00D622CE /* ToDoList.xcdatamodeld */; };
 		8F28AD262C847DF000D622CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F28AD252C847DF000D622CE /* Assets.xcassets */; };
 		8F28AD292C847DF000D622CE /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8F28AD282C847DF000D622CE /* Base */; };
-		8F28AD332C84822000D622CE /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F28AD322C84822000D622CE /* NewTaskViewController.swift */; };
 		8F28AD362C8492F100D622CE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F28AD352C8492F100D622CE /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +25,6 @@
 		8F28AD252C847DF000D622CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F28AD282C847DF000D622CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F28AD2A2C847DF000D622CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8F28AD322C84822000D622CE /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		8F28AD352C8492F100D622CE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				8F28AD1D2C847DEF00D622CE /* MainViewController.swift */,
-				8F28AD322C84822000D622CE /* NewTaskViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -168,7 +165,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F28AD1E2C847DEF00D622CE /* MainViewController.swift in Sources */,
-				8F28AD332C84822000D622CE /* NewTaskViewController.swift in Sources */,
 				8F28AD1A2C847DEF00D622CE /* AppDelegate.swift in Sources */,
 				8F28AD362C8492F100D622CE /* StorageManager.swift in Sources */,
 				8F28AD1C2C847DEF00D622CE /* SceneDelegate.swift in Sources */,

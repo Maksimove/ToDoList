@@ -7,33 +7,29 @@
 
 import UIKit
 
-protocol NewTaskViewControllerDelegate: AnyObject {
-    func addNewTask(_ task: ToDoTask)
-}
-
 final class MainViewController: UITableViewController {
-    
+    // MARK: - Private properties
     private var tasks: [ToDoTask] = []
     private let cellID = "task"
     private let storageManager = StorageManager.shared
     
+    // MARK: - View life sycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         setupNavigationBar()
         tasks = storageManager.fetchData()
-        
     }
     
     @objc func addTask() {
-        let newTaskVC = NewTaskViewController()
-        newTaskVC.delegate = self
-        present(newTaskVC, animated:  true)
+        showAlert(withTitle: "Добавить новое задание", andMessage: "Что нужно сделать?")
     }
     
+    // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tasks.count
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         let task = tasks[indexPath.row]
@@ -45,6 +41,20 @@ final class MainViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let task = tasks[indexPath.row]
+            tasks.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            storageManager.deleteTask(task)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = tasks[indexPath.row]
+        showAlert(withTitle: "Изменить задание", andMessage: "Что нужно сделать?", task: task)
+    }
+    // MARK: - Private methods
     private func setupNavigationBar() {
         title = "Tasks"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -60,15 +70,41 @@ final class MainViewController: UITableViewController {
         navigationController?.navigationBar.standardAppearance = navBarApearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarApearance
     }
-}
-
-extension MainViewController: NewTaskViewControllerDelegate {
-    func addNewTask(_ task: ToDoTask) {
-        tasks.append(task)
-        tableView.reloadData()
+    
+    private func showAlert(
+        withTitle title: String,
+        andMessage message: String,
+        task: ToDoTask? = nil
+    ) {
+        
+        let alert = UIAlertController(
+                title: title,
+                message: message,
+                preferredStyle: .alert
+        )
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] _ in
+            guard let newTitle = alert.textFields?.first?.text, !newTitle.isEmpty else { return }
+            if let task {
+                storageManager.updateTask(task, with: newTitle)
+                tableView.reloadData()
+            } else {
+                let newTask = storageManager.creatNewTask(newTitle)
+                tasks.append(newTask)
+                let indexPath = IndexPath(row: tasks.count - 1, section: 0)
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        alert.addTextField { textField in
+            textField.text = task?.title
+        }
+        present(alert, animated: true)
     }
 }
-
 
 #Preview {
     MainViewController()
