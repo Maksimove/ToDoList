@@ -12,17 +12,17 @@ protocol NewTaskViewControllerDelegate: AnyObject {
 }
 
 final class MainViewController: UITableViewController {
-    
+    // MARK: - Private properties
     private var tasks: [ToDoTask] = []
     private let cellID = "task"
     private let storageManager = StorageManager.shared
     
+    // MARK: - View life sycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         setupNavigationBar()
         tasks = storageManager.fetchData()
-        
     }
     
     @objc func addTask() {
@@ -30,7 +30,7 @@ final class MainViewController: UITableViewController {
         newTaskVC.delegate = self
         present(newTaskVC, animated:  true)
     }
-    
+    // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tasks.count
     }
@@ -45,6 +45,7 @@ final class MainViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Private methods
     private func setupNavigationBar() {
         title = "Tasks"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -68,7 +69,6 @@ extension MainViewController: NewTaskViewControllerDelegate {
         tableView.reloadData()
     }
 }
-
 
 #Preview {
     MainViewController()

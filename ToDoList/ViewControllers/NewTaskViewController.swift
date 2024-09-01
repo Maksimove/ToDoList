@@ -37,10 +37,11 @@ final class FilledButtonFactory: ButtonField {
 }
 
 final class NewTaskViewController: UIViewController {
-    
-    private let storageManager = StorageManager.shared
-    
+    // MARK: - Public properties
     weak var delegate: NewTaskViewControllerDelegate?
+    
+    // MARK: - Private properties
+    private let storageManager = StorageManager.shared
     
     private lazy var newTaskTF: UITextField = {
         let textField = UITextField()
@@ -78,13 +79,14 @@ final class NewTaskViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+    // MARK: - View life sycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         addSubview(newTaskTF,saveButton, cancelButton)
         setupConstraints()
     }
+    // MARK: - Private methods
     private func addSubview(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
